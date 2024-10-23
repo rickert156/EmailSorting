@@ -13,6 +13,8 @@ EXCEPT_SET_EMAIL = set()
 MAIN_EXCEPT_EMAIL = set()
 MAIN_EXCEPT_DOMAIN = set()
 
+SET_EMAIL = set()
+
 def InitExcept():
     global MAIN_EXCEPT_EMAIL
     global MAIN_EXCEPT_DOMAIN
@@ -22,6 +24,7 @@ def InitExcept():
 
 
 def readBase():
+    global SET_EMAIL
     try:
         TARGET_BASE = selectBase()
 
@@ -43,12 +46,13 @@ def readBase():
         filename = TARGET_BASE.split('/')[1]
         print(filename)
         time.sleep(1)
-        set_email = returnEmail()
+        SET_EMAIL = returnEmail()
     except Exception as err:print(f'Error: {err}')
 
 if __name__ == '__main__':
     createDir()
     readBase()
     InitExcept()
-    print(MAIN_EXCEPT_EMAIL)
-    print(MAIN_EXCEPT_DOMAIN)
+    print(len(SET_EMAIL))
+    print(len(MAIN_EXCEPT_EMAIL))
+    print(len(MAIN_EXCEPT_DOMAIN))
