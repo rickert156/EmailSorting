@@ -3,6 +3,7 @@ from utils.createDir import createDir
 from utils.searchFile import selectBase
 from utils.addEmail import addListEmail, readSetEmail, returnEmail
 from utils.exceptList import returnSetExceptEmail, returnSetExceptDomain
+from utils.validEmail import ClearExceptionEmail
 
 EXCEPT_DIR = 'Exception'
 EXCEPT_EMAIL = f'{EXCEPT_DIR}/email.txt'
@@ -14,6 +15,22 @@ MAIN_EXCEPT_EMAIL = set()
 MAIN_EXCEPT_DOMAIN = set()
 
 SET_EMAIL = set()
+
+def notExceptSet():
+    global MAIN_EXCEPT_EMAIL
+    global MAIN_EXCEPT_DOMAIN
+    global SET_EMAIL
+
+    lenEmail = len(SET_EMAIL)
+    lenExceptEmail = len(MAIN_EXCEPT_EMAIL)
+    lenExceptDomain = len(MAIN_EXCEPT_DOMAIN)
+    print(f'\nAll Emails: {lenEmail}\nAll Except Email: {lenExceptEmail}\nAll Except Domain: {lenExceptDomain}\n')
+
+    clearExceptionEmail = ClearExceptionEmail(SET_EMAIL, MAIN_EXCEPT_EMAIL)
+    countClearEmail = len(clearExceptionEmail)
+    diff_email = lenEmail - countClearEmail
+    print(f'All Email(clear): {countClearEmail}\tDelete {diff_email} email')
+
 
 def InitExcept():
     global MAIN_EXCEPT_EMAIL
@@ -53,6 +70,4 @@ if __name__ == '__main__':
     createDir()
     readBase()
     InitExcept()
-    print(len(SET_EMAIL))
-    print(len(MAIN_EXCEPT_EMAIL))
-    print(len(MAIN_EXCEPT_DOMAIN))
+    notExceptSet()
