@@ -6,7 +6,6 @@ from utils.exceptList import returnSetExceptEmail, returnSetExceptDomain
 from utils.validEmail import ClearExceptionEmail, ClearExceptionDomain
 from utils.writeEmail import writeEmailStepOne 
 
-
 EXCEPT_DIR = 'Exception'
 EXCEPT_EMAIL = f'{EXCEPT_DIR}/email.txt'
 EXCEPT_DOMAIN = f'{EXCEPT_DIR}/domain.txt'
@@ -28,16 +27,16 @@ def processingBase():
     
     with open(TARGET_BASE, 'r') as file:
         number_email = 0
+        print('\nProcessing...\n')
         for row in csv.DictReader(file):
             name = row['Name']
             email = row['Email']
             company = row['Company']
             if email in SET_EMAIL:
                 number_email+=1
-                print(f'[{number_email}] {email} {name} {company}')
+                #print(f'[{number_email}] {email} {name} {company}')
                 writeEmailStepOne(filename, name, email, company)
-            
-
+    print(f'Ready!\nOpen Result/{filename}')
 
 def notExceptSet():
     global MAIN_EXCEPT_EMAIL
@@ -47,7 +46,7 @@ def notExceptSet():
     lenEmail = len(SET_EMAIL)
     lenExceptEmail = len(MAIN_EXCEPT_EMAIL)
     lenExceptDomain = len(MAIN_EXCEPT_DOMAIN)
-    print(f'\nAll Emails: {lenEmail}\nEmails Exceptions(count): {lenExceptEmail}\nDomain Exceptions(count): {lenExceptDomain}\n')
+    print(f'\nAll Emails: {lenEmail}\nEmails Exceptions(count): \t{lenExceptEmail}\nDomain Exceptions(count): \t{lenExceptDomain}\n')
 
     clearExceptionEmail = ClearExceptionEmail(SET_EMAIL, MAIN_EXCEPT_EMAIL)
     clearExceptionDomain = ClearExceptionDomain(SET_EMAIL, MAIN_EXCEPT_DOMAIN)
@@ -78,10 +77,8 @@ def readBase():
             for row in csv.DictReader(file):
                 number_email+=1
                 email = row['Email']
-                print(f'[{number_email}] {email}')
                 addListEmail(email)
             
-            time.sleep(1)
             readSetEmail()
 
     except TypeError as err:

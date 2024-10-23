@@ -12,7 +12,7 @@ def readSetEmail():
     number_email = 0
     for email in SET_EMAIL:
         number_email+=1
-        print(f'[{number_email}] {email}')
+        #print(f'[{number_email}] {email}')
 
 def addListEmail(email):
     global SET_EMAIL
