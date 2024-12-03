@@ -4,13 +4,9 @@
 Изначально нужно подготовить директорию для хранения списка исключений
 ```sh
 #создать директорию для файлов с исключениями
-mkdir Exception 
-
 #создать файл для исключения по имейлу
-touch Exception/email.txt 
-
 #создать файл для исключения по домену
-touch Exception/domain.txt 
+mkdir Exception && touch Exception/email.txt && touch Exception/domain.txt 
 ```
 Создать директорию с исходной базой
 ```sh
