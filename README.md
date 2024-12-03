@@ -6,11 +6,7 @@
 #создать директорию для файлов с исключениями
 #создать файл для исключения по имейлу
 #создать файл для исключения по домену
-mkdir Exception && touch Exception/email.txt && touch Exception/domain.txt 
-```
-Создать директорию с исходной базой
-```sh
-mkdir Base
+mkdir Exception && mkdir Base && touch Exception/email.txt && touch Exception/domain.txt 
 ```
 Для обработки базы запускаем main.py
 ```sh
