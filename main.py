@@ -18,24 +18,42 @@ MAIN_EXCEPT_DOMAIN = set()
 SET_EMAIL = set()
 
 TARGET_BASE = False
-
 def processingBase():
     global TARGET_BASE
     global SET_EMAIL
 
-    filename = TARGET_BASE.split('/')[1]
-    
+    filename = TARGET_BASE.split('/')[-1]
+    processed_emails = set()  # Уникальные email из текущей сессии
+    count_check = 0
+    number_email = 0
+
     with open(TARGET_BASE, 'r') as file:
-        number_email = 0
+        reader = csv.DictReader(file)
+        total_rows = sum(1 for _ in file)  # Подсчёт строк
+        file.seek(0)  # Возврат указателя в начало для чтения данных
+
         print('\nProcessing...\n')
-        for row in csv.DictReader(file):
-            name = row['Name']
-            email = row['Email']
-            company = row['Company']
-            if email in SET_EMAIL:
-                number_email+=1
-                #print(f'[{number_email}] {email} {name} {company}')
-                writeEmailStepOne(filename, name, email, company)
+        for row in reader:
+            count_check += 1
+            email = row.get('Email')
+
+            # Проверяем наличие email и его уникальность
+            if email and '@' in email and email not in processed_emails and email in SET_EMAIL:
+                number_email += 1
+                processed_emails.add(email)
+                print(f'[ {count_check} / {total_rows} ] processing...\t[ {number_email} ]')
+
+                # Запись результата
+                writeEmailStepOne(
+                    filename=filename,
+                    name=row.get('Name'),
+                    email=email,
+                    company=row.get('Company'),
+                    domain=row.get('Domain'),
+                    category=row.get('Category'),
+                    source=row.get('Source')
+                )
+
     print(f'Ready!\nOpen Result/{filename}')
 
 def notExceptSet():
